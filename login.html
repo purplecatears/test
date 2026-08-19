@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign In</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f2f4f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  .card {
+    background: #fff;
+    padding: 32px 28px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    width: 320px;
+  }
+  .card h1 {
+    font-size: 22px;
+    margin: 0 0 20px;
+    text-align: center;
+    color: #222;
+  }
+  .field {
+    margin-bottom: 16px;
+  }
+  .field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #444;
+  }
+  .field input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  .password-wrap {
+    position: relative;
+  }
+  .password-wrap input {
+    padding-right: 70px;
+  }
+  .toggle-btn {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: #e9ecf3;
+    color: #333;
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .toggle-btn:hover {
+    background: #dde1eb;
+  }
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  button.action {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  button.action:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  #signInBtn {
+    background: #2563eb;
+    color: #fff;
+  }
+  #signInBtn:hover:not(:disabled) {
+    background: #1d4ed8;
+  }
+  #signOutBtn {
+    background: #e11d48;
+    color: #fff;
+  }
+  #signOutBtn:hover:not(:disabled) {
+    background: #be123c;
+  }
+  #status {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 13px;
+    min-height: 18px;
+  }
+  #status.success { color: #16a34a; }
+  #status.error { color: #dc2626; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Sign In</h1>
+
+  <form id="loginForm">
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="Enter username" autocomplete="username" />
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <div class="password-wrap">
+        <input type="password" id="password" name="password" placeholder="Enter password" autocomplete="current-password" />
+        <button type="button" class="toggle-btn" id="togglePasswordBtn">Show</button>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button type="submit" class="action" id="signInBtn">Sign In</button>
+      <button type="button" class="action" id="signOutBtn" disabled>Sign Out</button>
+    </div>
+  </form>
+
+  <div id="status"></div>
+</div>
+
+<script>
+  const form = document.getElementById('loginForm');
+  const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
+  const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+  const signInBtn = document.getElementById('signInBtn');
+  const signOutBtn = document.getElementById('signOutBtn');
+  const status = document.getElementById('status');
+
+  // Show/hide password toggle button
+  togglePasswordBtn.addEventListener('click', () => {
+    const isHidden = passwordInput.type === 'password';
+    passwordInput.type = isHidden ? 'text' : 'password';
+    togglePasswordBtn.textContent = isHidden ? 'Hide' : 'Show';
+  });
+
+  function setSignedIn(username) {
+    status.textContent = `Signed in as "${username}"`;
+    status.className = 'success';
+    signInBtn.disabled = true;
+    signOutBtn.disabled = false;
+    usernameInput.disabled = true;
+    passwordInput.disabled = true;
+    togglePasswordBtn.disabled = true;
+  }
+
+  function setSignedOut() {
+    status.textContent = 'Signed out';
+    status.className = '';
+    signInBtn.disabled = false;
+    signOutBtn.disabled = true;
+    usernameInput.disabled = false;
+    passwordInput.disabled = false;
+    togglePasswordBtn.disabled = false;
+    passwordInput.value = '';
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value;
+
+    if (!username || !password) {
+      status.textContent = 'Please enter both username and password.';
+      status.className = 'error';
+      return;
+    }
+
+    // Replace this block with a real authentication API call.
+    setSignedIn(username);
+  });
+
+  signOutBtn.addEventListener('click', () => {
+    setSignedOut();
+  });
+</script>
+
+</body>
+</html>
