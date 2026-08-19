@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-container">
+    <h1>Welcome</h1>
+    <p id="status" class="status">You are signed out.</p>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" autocomplete="username" required>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+          <button type="button" id="togglePassword" class="toggle-btn">Show</button>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button type="submit" id="signInBtn" class="btn btn-primary">Sign In</button>
+        <button type="button" id="signOutBtn" class="btn btn-secondary" disabled>Sign Out</button>
+      </div>
+
+      <div class="button-row">
+        <button type="button" id="forgotPasswordBtn" class="btn btn-link">Forgot Password?</button>
+        <button type="button" id="changePasswordBtn" class="btn btn-link" disabled>Change Password</button>
+      </div>
+    </form>
+
+    <p id="message" class="message"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
